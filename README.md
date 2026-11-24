@@ -3,7 +3,7 @@
 Desktop app (macOS) that reads an Excel list of websites and collects contact email
 addresses from each site's main page and its contact/about/support pages.
 
-## For the client
+## For production
 1. Open `EmailTool.dmg` and drag **EmailTool** into Applications.
 2. On first launch macOS will say it can't verify the app (it's unsigned). Open
    **System Settings → Privacy & Security**, scroll down, and click **Open Anyway**

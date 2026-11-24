@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.2.0
+- Polished desktop UI: header, input card, live stat counters, results table,
+  elapsed timer, File/Help menus, keyboard shortcut for Choose File, native light/dark mode.
+
 ## 1.1.0
 - The desktop app is now the **website email scraper** (progress bar, cancel, live log,
   background threads, parallel scraping). The Excel splitter remains in the package as a module.

@@ -44,8 +44,8 @@ REQUEST_TIMEOUT = 10
 PAGE_DELAY = 0.5
 DEFAULT_WORKERS = 5
 
-# progress callback: (done, total, website, status_message)
-ProgressCb = Callable[[int, int, str, str], None]
+# progress callback: (done, total, website, status_message, result_or_None)
+ProgressCb = Callable[[int, int, str, str, "SiteResult | None"], None]
 
 
 class ScraperError(Exception):
@@ -245,7 +245,7 @@ def scrape_sites(
                     msg = "could not load site"
                 else:
                     msg = f"{len(res.emails)} email(s)"
-                progress(done, total, site, msg)
+                progress(done, total, site, msg, res)
             if cancel and cancel.is_set():
                 break
     finally:
@@ -347,5 +347,5 @@ if __name__ == "__main__":  # command-line use: python -m email_tool.scraper web
     logging.basicConfig(level=logging.INFO)
     if len(sys.argv) != 2:
         raise SystemExit("Usage: python -m email_tool.scraper websites.xlsx")
-    out = scrape_file(sys.argv[1], progress=lambda d, t, s, m: print(f"[{d}/{t}] {s}: {m}"))
+    out = scrape_file(sys.argv[1], progress=lambda d, t, s, m, r: print(f"[{d}/{t}] {s}: {m}"))
     print(f"Done. Output in {out.output_dir}")

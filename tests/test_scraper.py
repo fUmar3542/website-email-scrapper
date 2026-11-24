@@ -82,7 +82,7 @@ def test_end_to_end(tmp_path, local_site, monkeypatch):
     ).to_excel(src, index=False)
 
     seen = []
-    out = scrape_file(src, progress=lambda d, t, s, m: seen.append((d, t)))
+    out = scrape_file(src, progress=lambda d, t, s, m, r: seen.append((d, t)))
 
     assert out.sites_with_emails == 1
     assert out.sites_without_emails == 1

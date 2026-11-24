@@ -30,10 +30,10 @@ app = BUNDLE(
     coll,
     name="WebsiteScrapper.app",
     icon=icon,
-    bundle_identifier="com.coderexo.WebsiteScrapper",
+    bundle_identifier="com.coderexo.websitescrapper",
     info_plist={
         "CFBundleName": "Website Email Scraper",
-        "CFBundleShortVersionString": "1.1.0",
+        "CFBundleShortVersionString": "1.2.0",
         "NSHighResolutionCapable": True,
     },
 )

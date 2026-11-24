@@ -1,6 +1,6 @@
 [project]
 name = "email-tool"
-version = "1.1.0"
+version = "1.2.0"
 description = "Website email scraper (desktop app) and Excel email splitter"
 requires-python = ">=3.10"
 dependencies = ["pandas", "openpyxl", "requests", "beautifulsoup4"]
