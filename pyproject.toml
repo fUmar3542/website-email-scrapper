@@ -1,0 +1,24 @@
+[project]
+name = "email-tool"
+version = "1.0.0"
+description = "Split Excel sheets into emailed / non-emailed contacts"
+requires-python = ">=3.10"
+dependencies = ["pandas", "openpyxl"]
+
+[project.optional-dependencies]
+scraper = ["requests", "beautifulsoup4", "lxml"]
+dev = ["pytest", "pyinstaller", "ruff"]
+
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+pythonpath = ["src"]
+testpaths = ["tests"]
+
+[tool.ruff]
+line-length = 100
