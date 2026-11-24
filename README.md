@@ -1,34 +1,38 @@
-# EmailTool
+# Website Email Scraper
 
-Splits an Excel sheet into two files: contacts **with** an email and contacts **without**.
+Desktop app (macOS) that reads an Excel list of websites and collects contact email
+addresses from each site's main page and its contact/about/support pages.
 
 ## For the client
 1. Open `EmailTool.dmg` and drag **EmailTool** into Applications.
-2. First launch: **right-click the app → Open → Open** (macOS warning for unsigned apps; only needed once).
-3. Choose your `.xlsx` file. It must have a column named **Primary Email**
-   (capitalisation and extra spaces don't matter). `.xls` is not supported; re-save as `.xlsx`.
-4. Results appear in an `Output` folder next to your file:
-   `Emailed_Sheet_<timestamp>.xlsx` and `Non_Emailed_Sheet_<timestamp>.xlsx`.
-
-Cells containing blanks, `N/A`, `none` or `-` count as "no email".
+2. On first launch macOS will say it can't verify the app (it's unsigned). Open
+   **System Settings → Privacy & Security**, scroll down, and click **Open Anyway**
+   next to EmailTool. This is only needed once.
+3. Click **Choose file…** and pick an `.xlsx` file with a column named **website**
+   (e.g. `example.com` or `https://example.com`). `.xls` is not supported; re-save as `.xlsx`.
+4. Click **Start**. You can **Cancel** at any time; partial results are saved.
+5. Results go to an `Output` folder next to your file:
+   - `scraped_emails_<timestamp>.xlsx`: website, email, page it was found on
+   - `no_emails_found_<timestamp>.xlsx`: websites with no email, and why
+   - `summary_<timestamp>.xlsx`: counts
 
 **Problems?** Send the log file at `~/Library/Logs/EmailTool/emailtool.log`.
+
+Only scrape websites you are permitted to, and respect each site's terms.
 
 ## For developers
 ```bash
 python3 -m venv .venv && source .venv/bin/activate
 pip install -r requirements-dev.txt
+pip install -e .
 python -m pytest -q
-python -m email_tool            # run the app (needs PYTHONPATH=src or pip install -e .)
-./build/build_mac.sh            # on a Mac: builds EmailTool.app and EmailTool.dmg
+python -m email_tool                       # run the app
+python -m email_tool.scraper sites.xlsx    # command-line scraping
+./build/build_mac.sh                       # on a Mac: builds EmailTool.app and EmailTool.dmg
 ```
 Edit `bundle_identifier` in `EmailTool.spec` before shipping.
 
-### Optional scraper
-`pip install -r requirements-scraper.txt` then `python -m email_tool.scraper websites.xlsx`.
-It is not bundled into the app.
-
 ### Layout
-- `src/email_tool/splitter.py`: pure logic (tested)
-- `src/email_tool/gui.py`: Tkinter wrapper
-- `src/email_tool/scraper.py`: optional website scraper
+- `src/email_tool/scraper.py`: scraping logic (tested against a local test server)
+- `src/email_tool/gui.py`: Tkinter app; scraping runs in a worker thread
+- `src/email_tool/splitter.py`: separate Excel splitter (by "Primary Email"); not in the app

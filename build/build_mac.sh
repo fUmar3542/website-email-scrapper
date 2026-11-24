@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Build EmailTool.app and EmailTool.dmg. Must be run on a Mac.
+# Build WebsiteScrapper.app and WebsiteScrapper.dmg. Must be run on a Mac.
 set -euo pipefail
 cd "$(dirname "$0")/.."
 
@@ -10,24 +10,24 @@ source .venv/bin/activate
 pip install --upgrade pip
 pip install -r requirements-dev.txt
 
-pytest -q
+python -m pytest -q
 
 rm -rf dist
-pyinstaller --noconfirm --workpath build/pyi EmailTool.spec
+pyinstaller --noconfirm --workpath build/pyi WebsiteScrapper.spec
 
 # Optional signing + notarization (needs Apple Developer account):
-#   codesign --deep --force --options runtime --sign "Developer ID Application: NAME (TEAMID)" dist/EmailTool.app
-#   ditto -c -k --keepParent dist/EmailTool.app EmailTool.zip
-#   xcrun notarytool submit EmailTool.zip --keychain-profile "notary" --wait
-#   xcrun stapler staple dist/EmailTool.app
+#   codesign --deep --force --options runtime --sign "Developer ID Application: NAME (TEAMID)" dist/WebsiteScrapper.app
+#   ditto -c -k --keepParent dist/WebsiteScrapper.app WebsiteScrapper.zip
+#   xcrun notarytool submit WebsiteScrapper.zip --keychain-profile "notary" --wait
+#   xcrun stapler staple dist/WebsiteScrapper.app
 
 command -v create-dmg >/dev/null || brew install create-dmg
-rm -f EmailTool.dmg
+rm -f WebsiteScrapper.dmg
 create-dmg \
-  --volname "EmailTool" \
+  --volname "WebsiteScrapper" \
   --window-size 540 340 \
-  --icon "EmailTool.app" 130 150 \
+  --icon "WebsiteScrapper.app" 130 150 \
   --app-drop-link 410 150 \
-  EmailTool.dmg dist/EmailTool.app
+  WebsiteScrapper.dmg dist/WebsiteScrapper.app
 
-echo "Done: EmailTool.dmg"
+echo "Done: WebsiteScrapper.dmg"
